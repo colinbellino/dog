@@ -29,7 +29,6 @@ namespace Dog.Game
 
             character.Velocity += Physics.gravity * (gravityModifier * step * step);
             character.CharacterController.Move(character.Velocity);
-            Debug.Log(character.Velocity);
         }
 
         public static void UpdateIsGrounded(Character character, LayerMask groundCheckMask)

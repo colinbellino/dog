@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 356243e64b70342989828dc9205d5fd0
+guid: d4031ba2df002c947a83f65f692ee596
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7462796400712542545
-    second: Checkered0
+      213: -7630356160388142399
+    second: CheckeredPixel0
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -82,7 +82,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Checkered0
+      name: CheckeredPixel0
       rect:
         serializedVersion: 2
         x: 1
@@ -96,8 +96,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fa617709632de6890800000000000000
-      internalID: -7462796400712542545
+      spriteID: 1cae95edf778b1690800000000000000
+      internalID: -7630356160388142399
       vertices: []
       indices: 
       edges: []
