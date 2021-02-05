@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 89ece9bba2ce9fb4cbd5341878b02e5e
+guid: 3eab7ab8ac7c24117b89b18c91eb070e
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ ScriptedImporter:
     wrapModeW: 0
     alphaIsTransparency: 1
     spriteMode: 1
-    spritePixelsPerUnit: 8
+    spritePixelsPerUnit: 100
     spriteTessellationDetail: 0
     spriteExtrude: 1
     spriteMeshType: 1
@@ -67,18 +67,6 @@ ScriptedImporter:
     mipmapFadeDistanceEnd: 3
   animationSettings: []
   texture: {instanceID: 0}
-  spriteImportData:
-  - name: Empty
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 8
-      height: 8
-    alignment: 0
-    pivot: {x: 0.5, y: 0.5}
-    border: {x: 0, y: 0, z: 0, w: 0}
-    tessellationDetail: 0
-    spriteID: 5c00a45e2929a4884b46af77fe5af14c
+  spriteImportData: []
   spriteRects: []
-  selectedImporter: 1
+  selectedImporter: 0
