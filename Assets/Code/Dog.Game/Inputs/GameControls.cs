@@ -50,7 +50,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""669a3815-aef5-4946-be49-29496bd995fc"",
                     ""expectedControlType"": """",
-                    ""processors"": ""NormalizeVector2"",
+                    ""processors"": """",
                     ""interactions"": """"
                 },
                 {

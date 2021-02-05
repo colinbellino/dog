@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.colinbellino.plugins.pixelfonts": "https://github.com/colinbellino/unity-private-plugins.git?path=Assets/Plugins/PixelFonts/",
     "com.cysharp.unitask": "2.1.1",
     "com.demigiant.dotween": "1.2.42",
     "com.unity.2d.sprite": "1.0.0",

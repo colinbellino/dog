@@ -7,6 +7,10 @@ namespace Dog.Game
 	{
 		public LayerMask InteractionMask;
 		public LayerMask GroundCheckMask;
+
 		public ParticleSystem PetParticles;
+
+		public CharacterComponent PlayerPrefab;
+		public CharacterComponent DoggoPrefab;
 	}
 }

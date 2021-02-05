@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.colinbellino.plugins.pixelfonts": {
+      "version": "https://github.com/colinbellino/unity-private-plugins.git?path=Assets/Plugins/PixelFonts/",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "aabce53c35c0c7ee85a98121b9bc2453f15c03dd"
+    },
     "com.cysharp.unitask": {
       "version": "2.1.1",
       "depth": 0,

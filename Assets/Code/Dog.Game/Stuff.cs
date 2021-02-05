@@ -13,8 +13,8 @@ namespace Dog.Game
 			character.RotationX -= look.y;
 			character.RotationX = Mathf.Clamp(character.RotationX, -90f, 90f);
 
-			character.HeadTransform.localRotation = Quaternion.Euler(character.RotationX, 0f, 0f);
-			character.BodyTransform.Rotate(Vector3.up, look.x);
+			character.Component.HeadTransform.localRotation = Quaternion.Euler(character.RotationX, 0f, 0f);
+			character.Component.RootTransform.Rotate(Vector3.up, look.x);
 		}
 
 		public static void Move(Character character, Vector2 moveInput, float speed, float gravityModifier, float step)
@@ -24,18 +24,18 @@ namespace Dog.Game
                 character.Velocity = Vector3.zero;
             }
 
-            var move = (character.BodyTransform.forward * moveInput.y + character.BodyTransform.right * moveInput.x);
-            character.CharacterController.Move(move * (speed * step));
+            var move = (character.Component.RootTransform.forward * moveInput.y + character.Component.RootTransform.right * moveInput.x);
+            character.Component.CharacterController.Move(move * (speed * step));
 
             character.Velocity += Physics.gravity * (gravityModifier * step * step);
-            character.CharacterController.Move(character.Velocity);
+            character.Component.CharacterController.Move(character.Velocity);
         }
 
         public static void UpdateIsGrounded(Character character, LayerMask groundCheckMask)
         {
             character.IsGrounded = Physics.CheckSphere(
-                character.GroundCheck.position,
-                character.GroundCheckRadius,
+                character.Component.GroundCheck.position,
+                character.Component.GroundCheckRadius,
         		groundCheckMask
             );
         }
@@ -46,7 +46,7 @@ namespace Dog.Game
 	        follower.rotation = target.rotation;
         }
 
-        public static Character GetCharacterPointedAt(Camera camera, float maxDistance, LayerMask interactionMask)
+        public static CharacterComponent GetCharacterPointedAt(Camera camera, float maxDistance, LayerMask interactionMask)
         {
 	        var didHit = Physics.Raycast(
 		        camera.transform.position, camera.transform.forward,
@@ -54,7 +54,7 @@ namespace Dog.Game
 	        );
 	        if (didHit)
 	        {
-		        return hit.collider.GetComponentInParent<Character>();
+		        return hit.collider.GetComponentInParent<CharacterComponent>();
 	        }
 
 	        return null;
@@ -69,6 +69,13 @@ namespace Dog.Game
 		        .Append(transform.DORotateQuaternion(originalRotation, 0.1f))
 		        .SetLoops(3)
 	        ;
+        }
+
+        public static Character SpawnCharacter(CharacterComponent prefab, string name, Vector3 position, Quaternion rotation)
+        {
+	        var component = GameObject.Instantiate(prefab, position, rotation);
+	        component.gameObject.name = name;
+	        return new Character { Name = name, Component = component };
         }
 	}
 }

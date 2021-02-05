@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static Dog.Game.Stuff;
@@ -8,11 +10,17 @@ namespace Dog.Game
     {
         private GameConfig _config;
         private GameControls _controls;
+        private GameUI _ui;
+        private GameState _state;
         private Camera _camera;
-        private Character _player;
         private GameObject _arm;
-        private Character _pointedCharacter;
-        private bool _busy;
+        private Character _selectedCharacter;
+
+        public class GameState
+        {
+	        public Character Player;
+	        public List<Character> Doggos;
+        }
 
         private void Awake()
         {
@@ -20,7 +28,10 @@ namespace Dog.Game
             _controls = new GameControls();
             _camera = Camera.main;
             _arm = GameObject.Find("Arm");
-            _player = GameObject.Find("Player").GetComponent<Character>();
+            _ui = FindObjectOfType<GameUI>();
+
+            _state = new GameState();
+            _state.Doggos = new List<Character>();
         }
 
         private void Start()
@@ -28,6 +39,20 @@ namespace Dog.Game
             _controls.Gameplay.Enable();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            var playerSpawn = GameObject.Find("Player Spawner").transform;
+            var player = SpawnCharacter(_config.PlayerPrefab, "Player", playerSpawn.position, playerSpawn.rotation);
+            _state.Player = player;
+
+            var spawners = FindObjectsOfType<SpawnerComponent>();
+            for (var spawnerIndex = 0; spawnerIndex < spawners.Length; spawnerIndex++)
+            {
+	            var spawner = spawners[spawnerIndex].transform;
+	            var doggo = SpawnCharacter(_config.DoggoPrefab, $"Doggo {spawnerIndex}", spawner.position, spawner.rotation);
+	            _state.Doggos.Add(doggo);
+            }
+
+            _ui.SetObjectives(0, _state.Doggos.Count);
 
             _controls.Gameplay.Confirm.performed += OnConfirmPerformed;
         }
@@ -37,30 +62,45 @@ namespace Dog.Game
             var moveInput = _controls.Gameplay.Move.ReadValue<Vector2>();
             var lookInput = _controls.Gameplay.Look.ReadValue<Vector2>();
 
-            if (_busy == false)
-            {
-	            UpdateIsGrounded(_player, _config.GroundCheckMask);
-	            Move(_player, moveInput, speed: 8f, gravityModifier: 3f, Time.deltaTime);
-	            Look(_player, _camera, lookInput, sensitivity: 50f, Time.deltaTime);
-	            Follow(_camera.transform, _player.HeadTransform);
+            Debug.Log("Move input: " + moveInput);
 
-	            _pointedCharacter = GetCharacterPointedAt(_camera, maxDistance: 2f, _config.InteractionMask);
+            if (_state.Player.IsBusy == false)
+            {
+	            UpdateIsGrounded(_state.Player, _config.GroundCheckMask);
+	            Move(_state.Player, moveInput, speed: 8f, gravityModifier: 3f, Time.deltaTime);
+	            Look(_state.Player, _camera, lookInput, sensitivity: 50f, Time.deltaTime);
+	            Follow(_camera.transform, _state.Player.Component.HeadTransform);
+
+	            _selectedCharacter = GetCharacter(_state.Doggos, GetCharacterPointedAt(_camera, maxDistance: 2f, _config.InteractionMask));
 	        }
+        }
+
+        public static bool WasPetted(Character character)
+        {
+	        return character.WasPetted;
+        }
+        public static Character GetCharacter(List<Character> characters, CharacterComponent component)
+        {
+	        return characters.Find(character => character.Component == component);
         }
 
         private async void OnConfirmPerformed(InputAction.CallbackContext obj)
         {
-	        if (_pointedCharacter == null || _busy)
+	        if (_selectedCharacter == null || _state.Player.IsBusy)
 	        {
+		        Debug.Log("Nothing to pet!");
 		        return;
 	        }
 
-	        _busy = true;
-	        var target = _pointedCharacter;
-	        Debug.Log("petting " + target.Name);
+	        _state.Player.IsBusy = true;
+
 	        await AnimatePet(_arm.transform);
-	        Instantiate(_config.PetParticles, target.BodyTransform.position, target.BodyTransform.rotation);
-	        _busy = false;
+	        Instantiate(_config.PetParticles, _selectedCharacter.Component.RootTransform.position, _selectedCharacter.Component.RootTransform.rotation);
+
+	        _state.Player.IsBusy = false;
+	        _selectedCharacter.WasPetted = true;
+
+	        _ui.SetObjectives(_state.Doggos.Where(WasPetted).Count(), _state.Doggos.Count());
         }
     }
 }
