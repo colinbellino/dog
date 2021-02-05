@@ -27,8 +27,9 @@ namespace Dog.Game
             var move = (character.BodyTransform.forward * moveInput.y + character.BodyTransform.right * moveInput.x);
             character.CharacterController.Move(move * (speed * step));
 
-            character.Velocity += Physics.gravity * (step * step * gravityModifier);
+            character.Velocity += Physics.gravity * (gravityModifier * step * step);
             character.CharacterController.Move(character.Velocity);
+            Debug.Log(character.Velocity);
         }
 
         public static void UpdateIsGrounded(Character character, LayerMask groundCheckMask)
@@ -40,11 +41,17 @@ namespace Dog.Game
             );
         }
 
-        public static Character GetCharacterPointedAt(Camera camera, LayerMask interactionMask)
+        public static void Follow(Transform follower, Transform target)
+        {
+	        follower.position = target.position;
+	        follower.rotation = target.rotation;
+        }
+
+        public static Character GetCharacterPointedAt(Camera camera, float maxDistance, LayerMask interactionMask)
         {
 	        var didHit = Physics.Raycast(
 		        camera.transform.position, camera.transform.forward,
-		        out var hit, maxDistance: 100f, interactionMask
+		        out var hit, maxDistance, interactionMask
 	        );
 	        if (didHit)
 	        {
@@ -56,11 +63,11 @@ namespace Dog.Game
 
         public static async UniTask AnimatePet(Transform transform)
         {
-	        var originalPosition = transform.localPosition;
+	        var originalRotation = transform.rotation;
 
 			await DOTween.Sequence()
-		        .Append(transform.DOLocalMove(originalPosition + new Vector3(0f, 0.5f, 0f), 0.2f))
-		        .Append(transform.DOLocalMove(originalPosition, 0.1f))
+		        .Append(transform.DORotateQuaternion(originalRotation * Quaternion.Euler(new Vector3(-20f, 0f, 0f)), 0.2f))
+		        .Append(transform.DORotateQuaternion(originalRotation, 0.1f))
 		        .SetLoops(3)
 	        ;
         }

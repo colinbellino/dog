@@ -37,15 +37,15 @@ namespace Dog.Game
             var moveInput = _controls.Gameplay.Move.ReadValue<Vector2>();
             var lookInput = _controls.Gameplay.Look.ReadValue<Vector2>();
 
-            UpdateIsGrounded(_player, _config.GroundCheckMask);
-            Move(_player, moveInput, speed: 10f, gravityModifier: 2f, Time.deltaTime);
-            Look(_player, _camera, lookInput, sensitivity: 50f, Time.deltaTime);
+            if (_busy == false)
+            {
+	            UpdateIsGrounded(_player, _config.GroundCheckMask);
+	            Move(_player, moveInput, speed: 8f, gravityModifier: 3f, Time.deltaTime);
+	            Look(_player, _camera, lookInput, sensitivity: 50f, Time.deltaTime);
+	            Follow(_camera.transform, _player.HeadTransform);
 
-            _camera.transform.position = _player.HeadTransform.position;
-            _camera.transform.rotation = _player.HeadTransform.rotation;
-
-            _pointedCharacter = GetCharacterPointedAt(_camera, _config.InteractionMask);
-            Debug.Log("char: " + (_pointedCharacter == null ? "nope" : _pointedCharacter.Name));
+	            _pointedCharacter = GetCharacterPointedAt(_camera, maxDistance: 2f, _config.InteractionMask);
+	        }
         }
 
         private async void OnConfirmPerformed(InputAction.CallbackContext obj)
@@ -56,9 +56,10 @@ namespace Dog.Game
 	        }
 
 	        _busy = true;
-	        Instantiate(_config.PetParticles, _pointedCharacter.BodyTransform.position, Quaternion.identity);
-	        Debug.Log("petting " + _pointedCharacter.Name);
+	        var target = _pointedCharacter;
+	        Debug.Log("petting " + target.Name);
 	        await AnimatePet(_arm.transform);
+	        Instantiate(_config.PetParticles, target.BodyTransform.position, target.BodyTransform.rotation);
 	        _busy = false;
         }
     }
