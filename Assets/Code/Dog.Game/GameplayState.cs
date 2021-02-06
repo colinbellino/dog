@@ -59,7 +59,7 @@ namespace Dog.Game
 			var moveInput = _controls.Gameplay.Move.ReadValue<Vector2>();
 			var lookInput = _controls.Gameplay.Look.ReadValue<Vector2>();
 
-			Debug.Log("Move input: " + moveInput);
+			// Debug.Log("Move input: " + moveInput);
 
 			if (_state.Player.IsBusy == false)
 			{
