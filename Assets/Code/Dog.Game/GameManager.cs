@@ -18,6 +18,7 @@ namespace Dog.Game
 		public Character Player;
 		public List<Character> Doggos = new List<Character>();
 		public Character SelectedCharacter;
+		public double TimeRemaining;
 	}
 
     public class GameManager : MonoBehaviour

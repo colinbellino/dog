@@ -1,13 +1,20 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Dog.Game
 {
 	public class GameUI : MonoBehaviour
 	{
+		[Header("Gameplay")]
 		[SerializeField] private GameObject _gameplayRoot;
+		[SerializeField] private VerticalLayoutGroup _objectivesLayout;
 		[SerializeField] private Text _objectivesText;
+		[SerializeField] private VerticalLayoutGroup _timerLayout;
+		[SerializeField] private Text _timerText;
+		[Header("Victory")]
 		[SerializeField] private GameObject _victoryRoot;
+		[Header("Defeat")]
 		[SerializeField] private GameObject _defeatRoot;
 
 		private void Awake()
@@ -24,9 +31,18 @@ namespace Dog.Game
 		public void ShowDefeat() { _defeatRoot.SetActive(true); }
 		public void HideDefeat() { _defeatRoot.SetActive(false); }
 
-		public void SetObjectives(int current, int max)
+		public async void SetObjective(string name, int current, int objective)
 		{
-			_objectivesText.text = $"Pet the doggos: {current.ToString()} / {max.ToString()}";
+			_objectivesText.text = $"{name}: {current.ToString()} / {objective.ToString()}";
+
+			_objectivesLayout.enabled = false;
+			await UniTask.NextFrame();
+			_objectivesLayout.enabled = true;
+		}
+
+		public void SetTimer(double value)
+		{
+			_timerText.text = value.ToString("0.0");
 		}
 	}
 }

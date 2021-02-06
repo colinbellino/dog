@@ -77,5 +77,12 @@ namespace Dog.Game
 	        component.gameObject.name = name;
 	        return new Character { Name = name, Component = component };
         }
+
+        public static bool IsDevBuild()
+        {
+			#if UNITY_EDITOR
+		        return true;
+	        #endif
+        }
 	}
 }

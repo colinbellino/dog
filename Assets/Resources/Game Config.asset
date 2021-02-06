@@ -21,3 +21,4 @@ MonoBehaviour:
   PetParticles: {fileID: 5912160829107304833, guid: b8652f08474d24347b30afde16d6d2de, type: 3}
   PlayerPrefab: {fileID: 8607635509127698944, guid: ff8ca0928bd2e5e4091e2944a09037da, type: 3}
   DoggoPrefab: {fileID: 2081968728, guid: e6d961e0f8d1c604ebda2900502bd9b9, type: 3}
+  RoundDuration: 15

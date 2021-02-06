@@ -12,5 +12,7 @@ namespace Dog.Game
 
 		public CharacterComponent PlayerPrefab;
 		public CharacterComponent DoggoPrefab;
+
+		public double RoundDuration = 30f;
 	}
 }
