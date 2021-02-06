@@ -7,6 +7,13 @@
       "dependencies": {},
       "hash": "aabce53c35c0c7ee85a98121b9bc2453f15c03dd"
     },
+    "com.colinbellino.plugins.stateless": {
+      "version": "https://github.com/colinbellino/unity-private-plugins.git?path=Assets/Plugins/Stateless/",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d89863d8cb2d92e30644b768df65e8c17883a0bf"
+    },
     "com.cysharp.unitask": {
       "version": "2.1.1",
       "depth": 0,
