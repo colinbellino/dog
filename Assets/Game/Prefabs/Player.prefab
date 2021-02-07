@@ -93,7 +93,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6112140441184920512}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterController: {fileID: 6112140441456651110}
-  BodyTransform: {fileID: 6112140441456651111}
+  RootTransform: {fileID: 6112140441184920515}
   HeadTransform: {fileID: 7808778188002872657}
   GroundCheck: {fileID: 6112140441271672630}
   GroundCheckRadius: 0.4

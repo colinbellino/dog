@@ -11,7 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: 82881a2d011b0964696411c822cdd00b, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _ENABLEROTATION_ON
   m_LightmapFlags: 0
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -89,8 +89,8 @@ Material:
     - _Exposure: 1
     - _Float0: 0
     - _FogFill: 0
-    - _FogHeight: 0.7
-    - _FogIntensity: 1
+    - _FogHeight: 0
+    - _FogIntensity: 0
     - _FogMessage: 0
     - _FogPosition: 0
     - _FogSmoothness: 0.01
