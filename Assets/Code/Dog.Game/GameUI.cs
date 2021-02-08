@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,14 +15,26 @@ namespace Dog.Game
 		[SerializeField] private Text _timerText;
 		[Header("Victory")]
 		[SerializeField] private GameObject _victoryRoot;
+		[SerializeField] private Button _victoryRetryButton;
 		[Header("Defeat")]
 		[SerializeField] private GameObject _defeatRoot;
+		[SerializeField] private Button _defeatRetryButton;
+
+		public event Action RetryClicked;
 
 		private void Awake()
 		{
 			HideGameplay();
 			HideVictory();
 			HideDefeat();
+
+			_victoryRetryButton.onClick.AddListener(OnRetryClicked);
+			_defeatRetryButton.onClick.AddListener(OnRetryClicked);
+		}
+
+		private void OnRetryClicked()
+		{
+			RetryClicked?.Invoke();
 		}
 
 		public void ShowGameplay() { _gameplayRoot.SetActive(true); }

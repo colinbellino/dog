@@ -11,6 +11,7 @@ namespace Dog.Game
 			await base.Enter();
 
 			_ui.ShowDefeat();
+			_ui.RetryClicked += OnRetryClicked;
 		}
 
 		public override async UniTask Exit()
@@ -18,6 +19,12 @@ namespace Dog.Game
 			await base.Exit();
 
 			_ui.HideDefeat();
+			_ui.RetryClicked -= OnRetryClicked;
+		}
+
+		private void OnRetryClicked()
+		{
+			_machine.Fire(GameStateMachine.Triggers.Retry);
 		}
 	}
 }

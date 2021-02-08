@@ -17,7 +17,8 @@ namespace Dog.Game
 			Done,
 			Victory,
 			Defeat,
-			QuitRequested,
+			Retry,
+			Quit,
 		}
 
 		private readonly Dictionary<States, IState> _states;
@@ -45,6 +46,12 @@ namespace Dog.Game
 			_machine.Configure(States.Gameplay)
 				.Permit(Triggers.Victory, States.Victory)
 				.Permit(Triggers.Defeat, States.Defeat);
+
+			_machine.Configure(States.Victory)
+				.Permit(Triggers.Retry, States.Gameplay);
+
+			_machine.Configure(States.Defeat)
+				.Permit(Triggers.Retry, States.Gameplay);
 
 			_currentState = _states[_machine.State];
 		}
