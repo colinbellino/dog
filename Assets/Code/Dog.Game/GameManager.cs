@@ -1,41 +1,24 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Dog.Game
 {
-	public class Game
-	{
-		public GameConfig Config;
-		public GameUI UI;
-		public Camera Camera;
-		public GameControls Controls;
-		public GameState State;
-		public GameObject PlayerArm;
-	}
-
-	public class GameState
-	{
-		public Character Player;
-		public List<Character> Doggos = new List<Character>();
-		public Character SelectedCharacter;
-		public double TimeRemaining;
-	}
-
-    public class GameManager : MonoBehaviour
+	public class GameManager : MonoBehaviour
     {
         private GameStateMachine _machine;
 
+        public Game Game { get; private set; }
+
         private void Awake()
         {
-	        var game = new Game();
-            game.Config = Resources.Load<GameConfig>("Game Config");
-            game.Controls = new GameControls();
-            game.Camera = Camera.main;
-            game.UI = FindObjectOfType<GameUI>();
-            game.PlayerArm = GameObject.Find("Arm");
-            game.State = new GameState();
+	        Game = new Game();
+            Game.Config = Resources.Load<GameConfig>("Game Config");
+            Game.Controls = new GameControls();
+            Game.Camera = Camera.main;
+            Game.UI = FindObjectOfType<GameUI>();
+            Game.PlayerArm = GameObject.Find("Arm");
+            Game.State = new GameState();
 
-	        _machine = new GameStateMachine(true, game);
+	        _machine = new GameStateMachine(true, Game);
         }
 
         private void Start()

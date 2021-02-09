@@ -15,6 +15,9 @@ namespace Dog.Game
 		{
 			await base.Enter();
 
+			_state.SelectedCharacter = null;
+			_state.TimeRemaining = 0f;
+
 			_controls.Gameplay.Enable();
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
@@ -23,6 +26,7 @@ namespace Dog.Game
 			var player = SpawnCharacter(_config.PlayerPrefab, "Player", playerSpawn.position, playerSpawn.rotation);
 			_state.Player = player;
 
+			_state.Doggos.Clear();
 			var spawners = GameObject.FindObjectsOfType<SpawnerComponent>();
 			for (var spawnerIndex = 0; spawnerIndex < spawners.Length; spawnerIndex++)
 			{
@@ -47,6 +51,12 @@ namespace Dog.Game
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
 
+			GameObject.Destroy(_state.Player.Component.gameObject);
+			foreach (var doggo in _state.Doggos)
+			{
+				GameObject.Destroy(doggo.Component.gameObject);
+			}
+
 			_controls.Gameplay.Confirm.performed -= OnConfirmPerformed;
 
 			_ui.HideGameplay();
@@ -65,7 +75,7 @@ namespace Dog.Game
 			{
 				UpdateIsGrounded(_state.Player, _config.GroundCheckMask);
 				Move(_state.Player, moveInput, speed: 8f, gravityModifier: 3f, Time.deltaTime);
-				Look(_state.Player, _camera, lookInput, sensitivity: 50f, Time.deltaTime);
+				Look(_state.Player, _camera, lookInput, sensitivity: 30f, Time.deltaTime);
 				Follow(_camera.transform, _state.Player.Component.HeadTransform);
 
 				_state.SelectedCharacter = GetCharacter(_state.Doggos, GetCharacterPointedAt(_camera, maxDistance: 2f, _config.InteractionMask));

@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -6,6 +7,17 @@ namespace Dog.Game
 {
 	public static class Stuff
 	{
+		public static Game GetGameInstance()
+		{
+			var manager = GameObject.FindObjectOfType<GameManager>();
+			if (manager == null)
+			{
+				throw new Exception("Couldn't find GameManager in scene.");
+			}
+
+			return manager.Game;
+		}
+
 		public static void Look(Character character, Camera camera, Vector2 lookInput, float sensitivity, float step)
 		{
 			var look = lookInput * (sensitivity * step);
