@@ -13,7 +13,6 @@ namespace Dog.Game
 		protected Camera _camera => _game.Camera;
 		protected GameControls _controls => _game.Controls;
 		protected GameState _state => _game.State;
-		protected GameObject _playerArm => _game.PlayerArm;
 
 		protected BaseGameState(GameStateMachine machine, Game game)
 		{

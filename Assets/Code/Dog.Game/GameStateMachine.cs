@@ -23,8 +23,8 @@ namespace Dog.Game
 
 		private readonly Dictionary<States, IState> _states;
 		private readonly StateMachine<States, Triggers> _machine;
+		private readonly bool _debug;
 		private IState _currentState;
-		private bool _debug;
 
 		public GameStateMachine(bool debug, Game game)
 		{

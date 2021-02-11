@@ -18,10 +18,6 @@ namespace Dog.Game
 			_state.SelectedCharacter = null;
 			_state.TimeRemaining = 0f;
 
-			_controls.Gameplay.Enable();
-			Cursor.lockState = CursorLockMode.Locked;
-			Cursor.visible = false;
-
 			var playerSpawn = GameObject.Find("Player Spawner").transform;
 			var player = SpawnCharacter(_config.PlayerPrefab, "Player", playerSpawn.position, playerSpawn.rotation);
 			_state.Player = player;
@@ -40,6 +36,7 @@ namespace Dog.Game
 
 			_state.TimeRemaining = _config.RoundDuration;
 
+			_controls.Gameplay.Enable();
 			_controls.Gameplay.Confirm.performed += OnConfirmPerformed;
 		}
 
@@ -48,8 +45,6 @@ namespace Dog.Game
 			await base.Exit();
 
 			_controls.Gameplay.Disable();
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
 
 			GameObject.Destroy(_state.Player.Component.gameObject);
 			foreach (var doggo in _state.Doggos)
@@ -75,10 +70,11 @@ namespace Dog.Game
 			{
 				UpdateIsGrounded(_state.Player, _config.GroundCheckMask);
 				Move(_state.Player, moveInput, speed: 8f, gravityModifier: 3f, Time.deltaTime);
-				Look(_state.Player, _camera, lookInput, sensitivity: 30f, Time.deltaTime);
-				Follow(_camera.transform, _state.Player.Component.HeadTransform);
+				// Look(_state.Player, _camera, lookInput, sensitivity: 30f, Time.deltaTime);
+				// FollowAndRotate(_camera.transform, _state.Player.Component.HeadTransform);
 
-				_state.SelectedCharacter = GetCharacter(_state.Doggos, GetCharacterPointedAt(_camera, maxDistance: 2f, _config.InteractionMask));
+				var characterComponent = GetNearestCharacter(_state.Player.Component.transform, radius: 2f, _config.InteractionMask);
+				_state.SelectedCharacter = GetCharacter(_state.Doggos, characterComponent);
 			}
 
 			_state.TimeRemaining -= Time.deltaTime;
@@ -119,7 +115,7 @@ namespace Dog.Game
 
 			_state.Player.IsBusy = true;
 
-			await AnimatePet(_playerArm.transform);
+			await AnimatePet(_state.Player.Component.transform);
 			GameObject.Instantiate(_config.PetParticles, _state.SelectedCharacter.Component.RootTransform.position, _state.SelectedCharacter.Component.RootTransform.rotation);
 
 			_state.Player.IsBusy = false;
