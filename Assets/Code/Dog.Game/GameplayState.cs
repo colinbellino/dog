@@ -51,7 +51,7 @@ namespace Dog.Game
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
 
-			GameObject.Destroy(_state.Player.Component.gameObject);
+			 GameObject.Destroy(_state.Player.Component.gameObject);
 			foreach (var doggo in _state.Doggos)
 			{
 				GameObject.Destroy(doggo.Component.gameObject);

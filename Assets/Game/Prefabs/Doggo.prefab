@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2081968727}
   - component: {fileID: 2081968728}
   - component: {fileID: 708157711814039879}
+  - component: {fileID: 4988500126146381537}
   m_Layer: 0
   m_Name: Doggo
   m_TagString: Untagged
@@ -77,6 +78,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _toRotate: {fileID: 4175710454294154944}
+--- !u!114 &4988500126146381537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7274810439894594583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a608694a78a641e1a6cd01c60aa98663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8849586667455170678
 GameObject:
   m_ObjectHideFlags: 0
